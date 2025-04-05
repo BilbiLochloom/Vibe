@@ -154,18 +154,18 @@
 <body class="theme-light">
     <div class="topbar">
         <div class="right-buttons">
-            <button onclick="setTheme('theme-light')">☀️</button>
-            <button onclick="setTheme('theme-dark')">🌙</button>
-        </div>
-        <div class="theme-menu">
-            <button>🎨</button>
-            <div class="theme-dropdown">
-                <button onclick="setTheme('theme-mint')">🌿</button>
-                <button onclick="setTheme('theme-sky')">🌤️</button>
-                <button onclick="setTheme('theme-peach')">🍑</button>
-                <button onclick="setTheme('theme-lavender')">💜</button>
-                <button onclick="setTheme('theme-sand')">🏖️</button>
-            </div>
+    <button onclick="toggleTheme()" id="themeToggle">☀️</button>
+</div>
+        <div class="theme-menu" id="themeMenu">
+    <button onclick="toggleThemeMenu(event)">🎨</button>
+    <div class="theme-dropdown" id="themeDropdown">
+        <button onclick="setTheme('theme-mint')">🌿</button>
+        <button onclick="setTheme('theme-sky')">🌤️</button>
+        <button onclick="setTheme('theme-peach')">🍑</button>
+        <button onclick="setTheme('theme-lavender')">💜</button>
+        <button onclick="setTheme('theme-sand')">🏖️</button>
+    </div>
+</div>
         </div>
     </div>
 
@@ -177,35 +177,72 @@
     </div>
 
     <script>
-        let count = 0;
+    // משתנה שמכיל את מספר הספירה
+    let count = 0;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) document.body.className = savedTheme;
+    // טעינת המידע מהזיכרון המקומי לאחר טעינת הדף
+    window.addEventListener('DOMContentLoaded', () => {
+        // טוען את העיצוב השמור
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.body.className = savedTheme;
 
-            const saved = localStorage.getItem('counter');
-            if (saved !== null) {
-                count = parseInt(saved);
-                document.getElementById('counter').textContent = count;
-            }
-        });
-
-        function changeCounter(val) {
-            count += val;
+        // טוען את הספירה האחרונה מהזיכרון
+        const saved = localStorage.getItem('counter');
+        if (saved !== null) {
+            count = parseInt(saved);
             document.getElementById('counter').textContent = count;
-            localStorage.setItem('counter', count);
         }
 
-        function resetCounter() {
-            count = 0;
-            document.getElementById('counter').textContent = count;
-            localStorage.setItem('counter', count);
+        // עדכון האייקון של מצב העיצוב לפי מצב נוכחי
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.textContent = document.body.classList.contains('theme-dark') ? '🌙' : '☀️';
         }
+    });
 
-        function setTheme(theme) {
-            document.body.className = theme;
-            localStorage.setItem('theme', theme);
-        }
-    </script>
+    // פונקציה להוספת 1 לספירה
+    function changeCounter(val) {
+        count += val;
+        document.getElementById('counter').textContent = count;
+        localStorage.setItem('counter', count); // שומר בזיכרון
+    }
+
+    // איפוס הספירה לאפס
+    function resetCounter() {
+        count = 0;
+        document.getElementById('counter').textContent = count;
+        localStorage.setItem('counter', count);
+    }
+
+    // קביעת עיצוב (נושא) ושמירה בזיכרון
+    function setTheme(theme) {
+        document.body.className = theme;
+        localStorage.setItem('theme', theme);
+
+        // עדכון האייקון בהתאם
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '☀️';
+    }
+
+    // מעבר בין מצב כהה למצב בהיר
+    function toggleTheme() {
+        const isDark = document.body.classList.contains('theme-dark');
+        const newTheme = isDark ? 'theme-light' : 'theme-dark';
+        setTheme(newTheme);
+    }
+
+    // פתיחה/סגירה של תפריט פלטות צבע
+    function toggleThemeMenu(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('themeDropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // סגירת תפריט הצבעים אם לוחצים מחוץ אליו
+    document.addEventListener('click', () => {
+        const dropdown = document.getElementById('themeDropdown');
+        if (dropdown) dropdown.style.display = 'none';
+    });
+</script>
 </body>
 </html>
