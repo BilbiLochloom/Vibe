@@ -107,12 +107,11 @@
         }
 
         button:focus,
-button:active {
+button:active,
+#reset:focus,
+#reset:active {
   outline: none;
   box-shadow: none;
-  -webkit-tap-highlight-color: transparent;
-  background-color: var(--btn) !important;
-  color: white !important;
 }
 
         .topbar {
@@ -176,21 +175,25 @@ button:active {
         }
 
         #reset {
-            font-size: 24px;
-            padding: 10px 16px;
-            border-radius: 30px;
-            border: none;
-            background-color: var(--reset);
-            color: white;
-            margin: 20px auto;
-            cursor: pointer;
-            display: block;
-            transition: background 0.2s, transform 0.1s;
-        }
+    font-size: 24px;
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--reset);
+    color: white;
+    margin: 20px auto;
+    cursor: pointer;
+    display: block;
+    transition: background 0.2s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+}
 
         #reset:hover {
-            background-color: var(--hover);
-        }
+    background-color: var(--hover);
+}
 
         .button-area {
             display: flex;
