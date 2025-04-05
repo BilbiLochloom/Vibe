@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Digital Tally Counter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Counter">
@@ -38,11 +38,12 @@
             flex-direction: column;
             justify-content: space-between;
             width: 100%;
+            touch-action: manipulation;
         }
 
         .topbar {
             width: 100%;
-            padding: 15px;
+            padding: 15px 24px;
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
@@ -68,10 +69,13 @@
             background-color: var(--card);
             color: var(--text);
             transition: background 0.2s;
+            outline: none;
         }
 
-        .theme-menu button:hover,
-        .right-buttons button:hover {
+        .theme-menu button:active,
+        .right-buttons button:active,
+        #reset:active,
+        .button-area button:active {
             background-color: var(--hover);
         }
 
@@ -116,6 +120,7 @@
             cursor: pointer;
             display: block;
             transition: background 0.2s, transform 0.1s;
+            outline: none;
         }
 
         #reset:hover {
@@ -126,8 +131,7 @@
         .button-area {
             display: flex;
             justify-content: center;
-            margin-bottom: 40px;
-            width: 100%;
+            margin: 0 24px 40px;
         }
 
         .button-area button {
@@ -142,6 +146,7 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: background 0.2s, transform 0.1s;
+            outline: none;
         }
 
         .button-area button:hover {
