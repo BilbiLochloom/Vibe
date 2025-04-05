@@ -169,17 +169,19 @@ button:active {
 <body class="theme-light">
     <div class="topbar">
         <div class="right-buttons">
-    <button onclick="toggleTheme()" id="themeToggle">☀️</button>
+    <button onclick="toggleSound()" id="soundToggle">🔊</button>
 </div>
         <div class="theme-menu" id="themeMenu">
-    <button onclick="toggleThemeMenu(event)">🎨</button>
+    <button onclick="toggleThemeMenu(event)" id="paletteIcon">🎨</button>
     <div class="theme-dropdown" id="themeDropdown">
-        <button onclick="setTheme('theme-mint')">🌿</button>
-        <button onclick="setTheme('theme-sky')">🌤️</button>
-        <button onclick="setTheme('theme-peach')">🍑</button>
-        <button onclick="setTheme('theme-lavender')">💜</button>
-        <button onclick="setTheme('theme-sand')">🏖️</button>
-    </div>
+    <button onclick="setTheme('theme-light')">☀️</button>
+    <button onclick="setTheme('theme-dark')">🌙</button>
+    <button onclick="setTheme('theme-mint')">🌿</button>
+    <button onclick="setTheme('theme-sky')">🌤️</button>
+    <button onclick="setTheme('theme-peach')">🍑</button>
+    <button onclick="setTheme('theme-lavender')">💜</button>
+    <button onclick="setTheme('theme-sand')">🏖️</button>
+</div>
 </div>
         </div>
     </div>
@@ -192,69 +194,105 @@ button:active {
     </div>
 
     <script>
-    // משתנה שמכיל את מספר הספירה
     let count = 0;
+    let soundEnabled = true;
+    const clickSound = new Audio("https://cdn.jsdelivr.net/gh/jkneb/sounds@main/click.mp3");
 
-    // טעינת המידע מהזיכרון המקומי לאחר טעינת הדף
     window.addEventListener('DOMContentLoaded', () => {
-        // טוען את העיצוב השמור
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) document.body.className = savedTheme;
+        const paletteIcon = document.getElementById('paletteIcon');
+        const themeIcons = {
+            'theme-light': '☀️',
+            'theme-dark': '🌙',
+            'theme-mint': '🌿',
+            'theme-sky': '🌤️',
+            'theme-peach': '🍑',
+            'theme-lavender': '💜',
+            'theme-sand': '🏖️'
+        };
+        if (savedTheme) {
+            document.body.className = savedTheme;
+            if (paletteIcon && themeIcons[savedTheme]) {
+                paletteIcon.textContent = themeIcons[savedTheme];
+            }
+        } document.body.className = savedTheme;
 
-        // טוען את הספירה האחרונה מהזיכרון
         const saved = localStorage.getItem('counter');
         if (saved !== null) {
             count = parseInt(saved);
             document.getElementById('counter').textContent = count;
         }
 
-        // עדכון האייקון של מצב העיצוב לפי מצב נוכחי
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             themeToggle.textContent = document.body.classList.contains('theme-dark') ? '🌙' : '☀️';
         }
+
+        const savedSound = localStorage.getItem('soundEnabled');
+        if (savedSound !== null) {
+            soundEnabled = savedSound === 'true';
+            updateSoundIcon();
+        }
     });
 
-    // פונקציה להוספת 1 לספירה
     function changeCounter(val) {
         if (navigator.vibrate) navigator.vibrate(20);
+        if (soundEnabled && clickSound) clickSound.play();
         count += val;
         document.getElementById('counter').textContent = count;
-        localStorage.setItem('counter', count); // שומר בזיכרון
+        localStorage.setItem('counter', count);
     }
 
-    // איפוס הספירה לאפס
     function resetCounter() {
         count = 0;
         document.getElementById('counter').textContent = count;
         localStorage.setItem('counter', count);
     }
 
-    // קביעת עיצוב (נושא) ושמירה בזיכרון
     function setTheme(theme) {
-        document.body.className = theme;
-        localStorage.setItem('theme', theme);
+    document.body.className = theme;
+    localStorage.setItem('theme', theme);
 
-        // עדכון האייקון בהתאם
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '☀️';
+    const themeIcons = {
+        'theme-light': '☀️',
+        'theme-dark': '🌙',
+        'theme-mint': '🌿',
+        'theme-sky': '🌤️',
+        'theme-peach': '🍑',
+        'theme-lavender': '💜',
+        'theme-sand': '🏖️'
+    };
+
+    const paletteIcon = document.getElementById('paletteIcon');
+    if (paletteIcon && themeIcons[theme]) {
+        paletteIcon.textContent = themeIcons[theme];
     }
+}
 
-    // מעבר בין מצב כהה למצב בהיר
     function toggleTheme() {
         const isDark = document.body.classList.contains('theme-dark');
         const newTheme = isDark ? 'theme-light' : 'theme-dark';
         setTheme(newTheme);
     }
 
-    // פתיחה/סגירה של תפריט פלטות צבע
     function toggleThemeMenu(e) {
         e.stopPropagation();
         const dropdown = document.getElementById('themeDropdown');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
-    // סגירת תפריט הצבעים אם לוחצים מחוץ אליו
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        localStorage.setItem('soundEnabled', soundEnabled);
+        updateSoundIcon();
+    }
+
+    function updateSoundIcon() {
+        const soundToggle = document.getElementById('soundToggle');
+        if (!soundToggle) return;
+        soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
     document.addEventListener('click', () => {
         const dropdown = document.getElementById('themeDropdown');
         if (dropdown) dropdown.style.display = 'none';
