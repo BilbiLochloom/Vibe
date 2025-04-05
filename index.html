@@ -177,16 +177,19 @@
     </div>
 
     <script>
-        let count = 0;
+        let count = localStorage.getItem('counter') ? parseInt(localStorage.getItem('counter')) : 0;
+        document.getElementById('counter').textContent = count;
 
         function changeCounter(val) {
             count += val;
             document.getElementById('counter').textContent = count;
+            localStorage.setItem('counter', count);
         }
 
         function resetCounter() {
             count = 0;
             document.getElementById('counter').textContent = count;
+            localStorage.setItem('counter', count);
         }
 
         function setTheme(theme) {
