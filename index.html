@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="icon.png">
     <style>
         :root {
+            --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
             --bg: #f2f2f7;
             --text: #000;
             --btn: #007aff;
@@ -20,19 +21,74 @@
         }
 
         body.theme-light {
-    --bg: #e0e0e0;
-    --text: #000000;
-    --btn: #2b2b2b;
-    --reset: #cc0000;
-    --card: #f4f4f4;
-    --hover: #bfbfbf;
-}
-        body.theme-dark { --bg: #1c1c1e; --text: #f2f2f7; --btn: #3a3a3c; --reset: #ff453a; --card: #2c2c2e; --hover: #3a3a3c; }
-        body.theme-mint { --bg: #e6f5f0; --text: #034d3f; --btn: #4cd7b0; --reset: #ffa69e; --card: #ffffff; --hover: #d4ede3; }
-        body.theme-sky { --bg: #e0f7ff; --text: #003f5c; --btn: #72bcd4; --reset: #ffa5b0; --card: #ffffff; --hover: #ccecf6; }
-        body.theme-peach { --bg: #fff2ec; --text: #4e2a1e; --btn: #ffb68f; --reset: #f28585; --card: #ffffff; --hover: #ffe0d2; }
-        body.theme-lavender { --bg: #f3f0ff; --text: #3d3a59; --btn: #b49fcc; --reset: #f47c7c; --card: #ffffff; --hover: #e4dcff; }
-        body.theme-sand { --bg: #fdf6ec; --text: #5a463a; --btn: #deb887; --reset: #e07a5f; --card: #ffffff; --hover: #f2e3d3; }
+            --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            --bg: #e0e0e0;
+            --text: #000000;
+            --btn: #2b2b2b;
+            --reset: #cc0000;
+            --card: #f4f4f4;
+            --hover: #bfbfbf;
+        }
+
+        body.theme-dark {
+            --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            --bg: #1c1c1e;
+            --text: #f2f2f7;
+            --btn: #3a3a3c;
+            --reset: #ff453a;
+            --card: #2c2c2e;
+            --hover: #3a3a3c;
+        }
+
+        body.theme-mint {
+            --btn-shadow: 0 6px 16px rgba(76, 215, 176, 0.3);
+            --bg: #e6f5f0;
+            --text: #034d3f;
+            --btn: #4cd7b0;
+            --reset: #ffa69e;
+            --card: #ffffff;
+            --hover: #d4ede3;
+        }
+
+        body.theme-sky {
+            --btn-shadow: 0 6px 16px rgba(114, 188, 212, 0.3);
+            --bg: #e0f7ff;
+            --text: #003f5c;
+            --btn: #72bcd4;
+            --reset: #ffa5b0;
+            --card: #ffffff;
+            --hover: #ccecf6;
+        }
+
+        body.theme-peach {
+            --btn-shadow: 0 6px 16px rgba(255, 182, 143, 0.3);
+            --bg: #fff2ec;
+            --text: #4e2a1e;
+            --btn: #ffb68f;
+            --reset: #f28585;
+            --card: #ffffff;
+            --hover: #ffe0d2;
+        }
+
+        body.theme-lavender {
+            --btn-shadow: 0 6px 16px rgba(180, 159, 204, 0.3);
+            --bg: #f3f0ff;
+            --text: #3d3a59;
+            --btn: #b49fcc;
+            --reset: #f47c7c;
+            --card: #ffffff;
+            --hover: #e4dcff;
+        }
+
+        body.theme-sand {
+            --btn-shadow: 0 6px 16px rgba(222, 184, 135, 0.3);
+            --bg: #fdf6ec;
+            --text: #5a463a;
+            --btn: #deb887;
+            --reset: #e07a5f;
+            --card: #ffffff;
+            --hover: #f2e3d3;
+        }
 
         html, body {
             overflow: hidden;
@@ -51,10 +107,10 @@
         }
 
         button:focus,
-button:active {
-    outline: none !important;
-    box-shadow: none !important;
-}
+        button:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
 
         .topbar {
             width: 100%;
@@ -130,8 +186,8 @@ button:active {
         }
 
         #reset:hover {
-    background-color: var(--hover);
-}
+            background-color: var(--hover);
+        }
 
         .button-area {
             display: flex;
@@ -139,58 +195,74 @@ button:active {
             margin: 0 24px 40px;
         }
 
-        .button-area button:active {
-    background-color: var(--btn) !important;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2), inset 0 -4px 0 rgba(255,255,255,0.1) !important;
-    transform: none !important;
-}
+        .button-area button.hovered {
+            box-shadow: var(--btn-shadow);
+        }
 
-.button-area button {
-    width: 100%;
-    max-width: 400px;
-    height: 100px;
-    font-size: 60px;
-    border: 4px solid #444;
-    border-radius: 100px;
-    background-color: var(--btn);
-    color: white;
-    cursor: pointer;
-    box-shadow: inset 0 -4px 6px rgba(0,0,0,0.3), 0 6px 12px rgba(0,0,0,0.3);
-    transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
+        .button-area button {
+            width: 100%;
+            max-width: 400px;
+            height: 100px;
+            font-size: 60px;
+            border: none;
+            border-radius: 100px;
+            background-color: var(--btn);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-        .button-area button:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
+        .custom-btn {
+            background-color: var(--btn);
+            color: var(--text);
+            border: none;
+            border-radius: 100px;
+            padding: 18px 36px;
+            font-size: 22px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.3s ease;
+        }
+
+        .custom-btn:hover {
+            background-color: var(--hover);
+            transform: scale(1.04);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+        }
     </style>
 </head>
 <body class="theme-light">
     <div class="topbar">
         <div class="right-buttons">
-    <button onclick="toggleSound()" id="soundToggle">🔊</button>
-</div>
+            <button onclick="toggleSound()" id="soundToggle">🔊</button>
+        </div>
         <div class="theme-menu" id="themeMenu">
-    <button onclick="toggleThemeMenu(event)" id="paletteIcon">🎨</button>
-    <div class="theme-dropdown" id="themeDropdown">
-    <button onclick="setTheme('theme-light')">☀️</button>
-    <button onclick="setTheme('theme-dark')">🌙</button>
-    <button onclick="setTheme('theme-mint')">🌿</button>
-    <button onclick="setTheme('theme-sky')">🌤️</button>
-    <button onclick="setTheme('theme-peach')">🍑</button>
-    <button onclick="setTheme('theme-lavender')">💜</button>
-    <button onclick="setTheme('theme-sand')">🏖️</button>
-</div>
-</div>
+            <button onclick="toggleThemeMenu(event)" id="paletteIcon">🎨</button>
+            <div class="theme-dropdown" id="themeDropdown">
+                <button onclick="setTheme('theme-light')">☀️</button>
+                <button onclick="setTheme('theme-dark')">🌙</button>
+                <button onclick="setTheme('theme-mint')">🌿</button>
+                <button onclick="setTheme('theme-sky')">🌤️</button>
+                <button onclick="setTheme('theme-peach')">🍑</button>
+                <button onclick="setTheme('theme-lavender')">💜</button>
+                <button onclick="setTheme('theme-sand')">🏖️</button>
+            </div>
         </div>
     </div>
 
+    
     <div id="counter">0</div>
     <button id="reset" onclick="resetCounter()">↺</button>
 
     <div class="button-area">
-        <button onclick="changeCounter(1)">+</button>
+        <button class="custom-btn plus-btn" onclick="changeCounter(1)">+</button>
     </div>
 
     <script>
@@ -215,7 +287,7 @@ button:active {
             if (paletteIcon && themeIcons[savedTheme]) {
                 paletteIcon.textContent = themeIcons[savedTheme];
             }
-        } document.body.className = savedTheme;
+        }
 
         const saved = localStorage.getItem('counter');
         if (saved !== null) {
@@ -232,6 +304,29 @@ button:active {
         if (savedSound !== null) {
             soundEnabled = savedSound === 'true';
             updateSoundIcon();
+        }
+
+        // שליטה ידנית על מצב hover לכפתור הפלוס
+        const plusButton = document.querySelector('.plus-btn');
+        if (plusButton) {
+            plusButton.addEventListener('mouseenter', () => {
+                plusButton.classList.add('hovered');
+            });
+            plusButton.addEventListener('mouseleave', () => {
+                plusButton.classList.remove('hovered');
+            });
+            plusButton.addEventListener('mousedown', () => {
+                plusButton.style.transform = 'scale(0.96)';
+                plusButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+            });
+            plusButton.addEventListener('mouseup', () => {
+                plusButton.style.transform = 'scale(1)';
+                plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+            });
+            plusButton.addEventListener('mouseleave', () => {
+                plusButton.style.transform = 'scale(1)';
+                plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+            });
         }
     });
 
@@ -250,24 +345,24 @@ button:active {
     }
 
     function setTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem('theme', theme);
+        document.body.className = theme;
+        localStorage.setItem('theme', theme);
 
-    const themeIcons = {
-        'theme-light': '☀️',
-        'theme-dark': '🌙',
-        'theme-mint': '🌿',
-        'theme-sky': '🌤️',
-        'theme-peach': '🍑',
-        'theme-lavender': '💜',
-        'theme-sand': '🏖️'
-    };
+        const themeIcons = {
+            'theme-light': '☀️',
+            'theme-dark': '🌙',
+            'theme-mint': '🌿',
+            'theme-sky': '🌤️',
+            'theme-peach': '🍑',
+            'theme-lavender': '💜',
+            'theme-sand': '🏖️'
+        };
 
-    const paletteIcon = document.getElementById('paletteIcon');
-    if (paletteIcon && themeIcons[theme]) {
-        paletteIcon.textContent = themeIcons[theme];
+        const paletteIcon = document.getElementById('paletteIcon');
+        if (paletteIcon && themeIcons[theme]) {
+            paletteIcon.textContent = themeIcons[theme];
+        }
     }
-}
 
     function toggleTheme() {
         const isDark = document.body.classList.contains('theme-dark');
@@ -297,6 +392,22 @@ button:active {
         const dropdown = document.getElementById('themeDropdown');
         if (dropdown) dropdown.style.display = 'none';
     });
-</script>
+
+    const customBtn = document.querySelector('.custom-btn');
+    if (customBtn) {
+        customBtn.addEventListener('mousedown', () => {
+            customBtn.style.transform = 'scale(0.96)';
+            customBtn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        });
+        customBtn.addEventListener('mouseup', () => {
+            customBtn.style.transform = 'scale(1)';
+            customBtn.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+        });
+        customBtn.addEventListener('mouseleave', () => {
+            customBtn.style.transform = 'scale(1)';
+            customBtn.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+        });
+    }
+    </script>
 </body>
 </html>
