@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>VibeClicker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -9,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="VibeClicker">
     <link rel="apple-touch-icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <style>
         :root {
             --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
@@ -107,12 +107,12 @@
         }
 
         button:focus,
-button:active,
-#reset:focus,
-#reset:active {
-  outline: none;
-  box-shadow: none;
-}
+        button:active,
+        #reset:focus,
+        #reset:active {
+            outline: none;
+            box-shadow: none;
+        }
 
         .topbar {
             width: 100%;
@@ -175,25 +175,25 @@ button:active,
         }
 
         #reset {
-    font-size: 24px;
-    padding: 10px 16px;
-    border-radius: 30px;
-    border: none;
-    background-color: var(--reset);
-    color: white;
-    margin: 20px auto;
-    cursor: pointer;
-    display: block;
-    transition: background 0.2s, transform 0.1s;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-appearance: none;
-}
+            font-size: 24px;
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: none;
+            background-color: var(--reset);
+            color: white;
+            margin: 20px auto;
+            cursor: pointer;
+            display: block;
+            transition: background 0.2s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-appearance: none;
+        }
 
         #reset:hover {
-    background-color: var(--hover);
-}
+            background-color: var(--hover);
+        }
 
         .button-area {
             display: flex;
@@ -236,9 +236,7 @@ button:active,
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
             transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.3s ease;
         }
-
-        /* .custom-btn:hover { } — בוטל לחלוטין למובייל */
-    </style>
+</style>
 </head>
 <body class="theme-light">
     <div class="topbar">
@@ -259,7 +257,6 @@ button:active,
         </div>
     </div>
 
-    
     <div id="counter">0</div>
     <button id="reset" onclick="resetCounter()">↺</button>
 
@@ -268,148 +265,114 @@ button:active,
     </div>
 
     <script>
-    let count = 0;
-    let soundEnabled = true;
-    const clickSound = new Audio("https://cdn.jsdelivr.net/gh/jkneb/sounds@main/click.mp3");
+        let count = 0;
+        let soundEnabled = true;
+        const clickSound = new Audio("https://cdn.jsdelivr.net/gh/jkneb/sounds@main/click.mp3");
 
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme');
-        const paletteIcon = document.getElementById('paletteIcon');
-        const themeIcons = {
-            'theme-light': '☀️',
-            'theme-dark': '🌙',
-            'theme-mint': '🌿',
-            'theme-sky': '🌤️',
-            'theme-peach': '🍑',
-            'theme-lavender': '💜',
-            'theme-sand': '🏖️'
-        };
-        if (savedTheme) {
-            document.body.className = savedTheme;
-            if (paletteIcon && themeIcons[savedTheme]) {
-                paletteIcon.textContent = themeIcons[savedTheme];
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const paletteIcon = document.getElementById('paletteIcon');
+            const themeIcons = {
+                'theme-light': '☀️',
+                'theme-dark': '🌙',
+                'theme-mint': '🌿',
+                'theme-sky': '🌤️',
+                'theme-peach': '🍑',
+                'theme-lavender': '💜',
+                'theme-sand': '🏖️'
+            };
+            if (savedTheme) {
+                document.body.className = savedTheme;
+                if (paletteIcon && themeIcons[savedTheme]) {
+                    paletteIcon.textContent = themeIcons[savedTheme];
+                }
+            }
+
+            const saved = localStorage.getItem('counter');
+            if (saved !== null) {
+                count = parseInt(saved);
+                document.getElementById('counter').textContent = count;
+            }
+
+            const savedSound = localStorage.getItem('soundEnabled');
+            if (savedSound !== null) {
+                soundEnabled = savedSound === 'true';
+                updateSoundIcon();
+            }
+
+            const plusButton = document.querySelector('.plus-btn');
+            if (plusButton) {
+                plusButton.addEventListener('mousedown', () => {
+                    plusButton.style.transform = 'scale(0.96)';
+                    plusButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+                });
+                plusButton.addEventListener('mouseup', () => {
+                    plusButton.style.transform = 'scale(1)';
+                    plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+                });
+                plusButton.addEventListener('mouseleave', () => {
+                    plusButton.style.transform = 'scale(1)';
+                    plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
+                });
+            }
+        });
+
+        function changeCounter(val) {
+            if (navigator.vibrate) navigator.vibrate(20);
+            if (soundEnabled && clickSound) clickSound.play();
+            count += val;
+            document.getElementById('counter').textContent = count;
+            localStorage.setItem('counter', count);
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById('counter').textContent = count;
+            localStorage.setItem('counter', count);
+        }
+
+        function setTheme(theme) {
+            document.body.className = theme;
+            localStorage.setItem('theme', theme);
+
+            const themeIcons = {
+                'theme-light': '☀️',
+                'theme-dark': '🌙',
+                'theme-mint': '🌿',
+                'theme-sky': '🌤️',
+                'theme-peach': '🍑',
+                'theme-lavender': '💜',
+                'theme-sand': '🏖️'
+            };
+
+            const paletteIcon = document.getElementById('paletteIcon');
+            if (paletteIcon && themeIcons[theme]) {
+                paletteIcon.textContent = themeIcons[theme];
             }
         }
 
-        const saved = localStorage.getItem('counter');
-        if (saved !== null) {
-            count = parseInt(saved);
-            document.getElementById('counter').textContent = count;
+        function toggleThemeMenu(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         }
 
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.textContent = document.body.classList.contains('theme-dark') ? '🌙' : '☀️';
-        }
-
-        const savedSound = localStorage.getItem('soundEnabled');
-        if (savedSound !== null) {
-            soundEnabled = savedSound === 'true';
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('soundEnabled', soundEnabled);
             updateSoundIcon();
         }
 
-        // שליטה ידנית על מצב hover לכפתור הפלוס
-        const plusButton = document.querySelector('.plus-btn');
-        if (plusButton) {
-            plusButton.addEventListener('mouseenter', () => {
-                plusButton.classList.add('hovered');
-            });
-            plusButton.addEventListener('mouseleave', () => {
-                plusButton.classList.remove('hovered');
-            });
-            plusButton.addEventListener('mousedown', () => {
-                plusButton.style.transform = 'scale(0.96)';
-                plusButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-            });
-            plusButton.addEventListener('mouseup', () => {
-                plusButton.style.transform = 'scale(1)';
-                plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
-            });
-            plusButton.addEventListener('mouseleave', () => {
-                plusButton.style.transform = 'scale(1)';
-                plusButton.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
-            });
+        function updateSoundIcon() {
+            const soundToggle = document.getElementById('soundToggle');
+            if (!soundToggle) return;
+            soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
         }
-    });
 
-    function changeCounter(val) {
-        if (navigator.vibrate) navigator.vibrate(20);
-        if (soundEnabled && clickSound) clickSound.play();
-        count += val;
-        document.getElementById('counter').textContent = count;
-        localStorage.setItem('counter', count);
-    }
-
-    function resetCounter() {
-        count = 0;
-        document.getElementById('counter').textContent = count;
-        localStorage.setItem('counter', count);
-    }
-
-    function setTheme(theme) {
-        document.body.className = theme;
-        localStorage.setItem('theme', theme);
-
-        const themeIcons = {
-            'theme-light': '☀️',
-            'theme-dark': '🌙',
-            'theme-mint': '🌿',
-            'theme-sky': '🌤️',
-            'theme-peach': '🍑',
-            'theme-lavender': '💜',
-            'theme-sand': '🏖️'
-        };
-
-        const paletteIcon = document.getElementById('paletteIcon');
-        if (paletteIcon && themeIcons[theme]) {
-            paletteIcon.textContent = themeIcons[theme];
-        }
-    }
-
-    function toggleTheme() {
-        const isDark = document.body.classList.contains('theme-dark');
-        const newTheme = isDark ? 'theme-light' : 'theme-dark';
-        setTheme(newTheme);
-    }
-
-    function toggleThemeMenu(e) {
-        e.stopPropagation();
-        const dropdown = document.getElementById('themeDropdown');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function toggleSound() {
-        soundEnabled = !soundEnabled;
-        localStorage.setItem('soundEnabled', soundEnabled);
-        updateSoundIcon();
-    }
-
-    function updateSoundIcon() {
-        const soundToggle = document.getElementById('soundToggle');
-        if (!soundToggle) return;
-        soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
-    }
-
-    document.addEventListener('click', () => {
-        const dropdown = document.getElementById('themeDropdown');
-        if (dropdown) dropdown.style.display = 'none';
-    });
-
-    const customBtn = document.querySelector('.custom-btn');
-    if (customBtn) {
-        customBtn.addEventListener('mousedown', () => {
-            customBtn.style.transform = 'scale(0.96)';
-            customBtn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        document.addEventListener('click', () => {
+            const dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.style.display = 'none';
         });
-        customBtn.addEventListener('mouseup', () => {
-            customBtn.style.transform = 'scale(1)';
-            customBtn.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
-        });
-        customBtn.addEventListener('mouseleave', () => {
-            customBtn.style.transform = 'scale(1)';
-            customBtn.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.3)';
-        });
-    }
     </script>
 </body>
 </html>
